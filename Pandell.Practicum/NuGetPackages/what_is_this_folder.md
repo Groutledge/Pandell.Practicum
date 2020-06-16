@@ -1,0 +1,2 @@
+# Why is this Folder Here?
+Nuget, without specifying a .nuget config file in a Solution, will try to download and install Nuget packages to your global nuget repository on your machine. In conjunction with the .nuget folder in this solution, along with it's configuration file, any Nuget packages required for this solution should be downloaded into this NuGetPackages folder and only be native to this solution.  
