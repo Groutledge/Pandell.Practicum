@@ -1,0 +1,21 @@
+version: "3.5"
+services:
+  mysqldb:
+    image: mysql:latest
+    container_name: pandell.app.db
+    ports:
+      - "3305:3306"
+    environment:
+      - MYSQL_USER=Pandell
+      - MYSQL_PASSWORD=P@nd3ll!
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=Pandell
+    networks: ['stack']
+    volumes:
+      - ./../Database/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./../Database:/docker-entrypoint-initdb.d
+      - ./../Database/mysql-docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+
+networks:
+  stack:
+    driver: bridge

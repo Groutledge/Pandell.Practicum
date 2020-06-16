@@ -1,0 +1,207 @@
+<project name="Pandell.Practicum" default="all">
+    <!-- Project Run/Compile Configuration -->
+    <property name="environment" value="Dev" />
+    <property name="build.configuration" value="Debug" />
+    <property name="build.platform" value="Any CPU" />
+    <property name="base.bin.dir" value="bin" />
+    <property name="bin.dir" value="${base.bin.dir}\${build.configuration}" />
+    <property name="project.name" value="${project::get-name()}" />
+    <property name="version.number" value="001" />
+    <property name="app.version.number" value="1.0.0.0" />
+    <property name="build.file" value ="${project.name}.build"/>
+    <property name="logfile.name" value="${project.name}" />
+    
+    <!-- Directory Information   -->
+    <property name="solution.dir" value ="${directory::get-parent-directory(directory::get-current-directory())}"/>
+    <property name="source.dir" value="${solution.dir}\Source"/>
+    <property name="batch.dir" value="${solution.dir}\Batch" />
+    <property name="build.dir" value="${solution.dir}\Build" />
+    <property name="build.output.dir" value="${solution.dir}\BuildOutput" />
+    <property name="test.results.dir" value="${build.output.dir}\TestResults" />
+    <property name="config.dir" value="${solution.dir}\Config" />
+    <property name="documents.dir" value="${solution.dir}\Documents" />
+    <property name="templates.dir" value="${solution.dir}\Templates" />
+    <property name="tools.dir" value="${solution.dir}\Tools" />
+    <property name="test.settings.dir" value="${solution.dir}\TestSettings" />
+    <property name="nuget.packages.dir" value="${solution.dir}\NuGetPackages" />
+    <property name="deployment.dir" value="${solution.dir}\Deployment" />
+    <property name="local.deployment.dir" value="${deployment.dir}\${environment}" />
+    <property name="net.core.app.dir" value="netcoreapp2.2" />
+         
+    <!-- Database Information -->
+    <property name="database.dir" value="${solution.dir}\Database" />
+    
+    <!-- Project Names -->
+    <property name="unittest.identifier" value="UnitTests" />
+    <property name="functionaltest.identifier" value="FunctionalTests" />
+    
+    <!-- Deployment Directory Information -->
+    <property name="source.app.dir" value="${source.dir}\App" />
+
+    <!-- Configuration -->
+    <property name="solution" value="${solution.dir}\${project.name}.sln" />
+    <property name="machine.name" value="${environment::get-machine-name()}"/>
+    <property name="user.name" value="${environment::get-user-name()}"/>
+    <property name="machine.config.file" value="${config.dir}\${machine.name}.properties"/>
+    <property name="user.config.file" value="${config.dir}\${user.name}.properties"/>
+    <property name="nuget.config" value="${solution.dir}\.nuget\nuget.config" />
+    
+    <!-- Tools Information   -->
+    <property name="nantcontrib.dll" value="${tools.dir}\NAntContrib\NAnt.Contrib.Tasks.dll" />
+    <property name="nuget.exe" value="${tools.dir}\NuGet\nuget.exe" />
+    <property name="cmd.exe" value="C:\Windows\System32\cmd.exe" />
+    <property name="dotnet.exe" value="C:\Program Files\dotnet\dotnet.exe" />
+  
+    <!-- Initialization of the Compile -->
+    <target name="load.assemblies" description="Loads external Assemblies used in NAnt Execution">
+        <echo message="Loading NAntContrib for NAnt Execution" />
+        <loadtasks assembly="${nantcontrib.dll}" />
+    </target>
+    
+    <target name="init" depends="load.assemblies">
+        <echo message="Environment: ${environment}"/>
+        <echo message="Runtime Configuration: ${build.configuration}"/>
+        <echo message="Running on machine: ${machine.name}"/>
+        <echo message="Running for user: ${user.name}"/>
+        
+        <if test="${environment == 'Dev' 
+            or environment == 'QA'
+            or environment == 'Prod'}">
+            <echo message="Including the deployment property file ${environment}.properties" />
+            <include buildfile="${config.dir}\${environment}.properties" />
+        </if>
+        
+        <if test="${environment == 'Dev' and file::exists(user.config.file)}">
+            <echo message="The user config file for file ${user.name} was found in the config directory and will be included." />
+            <include buildfile="${user.config.file}"/>
+        </if>
+    </target>
+
+    <target name="copy.xunit.runner.configuration" depends="init" description="Copies the xunit.runner.json to certain test projects, to remove parallelization">
+        <foreach item="Folder" in="${source.dir}" property="SourceFolderName">
+            <foreach item="Folder" in="${SourceFolderName}" property="ProjectFolderName">
+                <property name="project.directory.name" value="${directory::get-name(ProjectFolderName)}" />
+                <if test="${string::contains(project.directory.name, 'Tests')}">
+                    <copy file="${templates.dir}/xunit.runner.json.template" tofile="${ProjectFolderName}/xunit.runner.json" overwrite="true">
+                        <filterchain>
+                        <expandproperties />
+                        </filterchain>
+                    </copy>
+                </if>
+            </foreach>
+        </foreach>
+    </target>
+
+    <!-- Copying of the Configuration File Template to All Projects -->
+    <target name="copy.config.files" depends="copy.xunit.runner.configuration">
+        <foreach item="Folder" in="${source.dir}" property="SourceFolderName">
+            <foreach item="Folder" in="${SourceFolderName}" property="ProjectFolderName">
+                <property name="project.directory.name" value="${directory::get-name(ProjectFolderName)}" />
+                <property name="logfile.name" value="${project.name}" />
+                    <echo message="Copying appsettings.json to ${project.directory.name}" />
+                    <copy file="${templates.dir}/AppSettings.json.config.template" tofile="${ProjectFolderName}/appsettings.json" overwrite="true">
+                        <filterchain>
+                        <expandproperties />
+                        </filterchain>
+                    </copy>
+                    <echo message="Copying Log4Net.config to ${project.directory.name}" />
+                    <copy file="${templates.dir}/Log4Net.config.template" tofile="${ProjectFolderName}/log4net.config" overwrite="true">
+                        <filterchain>
+                        <expandproperties />
+                        </filterchain>
+                    </copy>
+            </foreach>
+        </foreach>
+    </target>
+
+    <target name="dotnet.restore" depends="copy.config.files" description="Restores all NuGet Packages via DotNet Restore">
+      <echo message="Running the Nuget Package Update before Build" />
+      <echo message="${dotnet.exe} ${solution.dir} restore --configfile ${nuget.config} --packages ${nuget.packages.dir} --force --verbosity n" />
+      <exec program="${dotnet.exe}" 
+            workingdir="${solution.dir}"
+            commandline="restore --configfile ${nuget.config} --packages ${nuget.packages.dir} --force --verbosity n"
+            failonerror="true"/>
+    </target>
+    
+    <!-- Compiling the Solution -->
+    <target name="build.solution" depends="dotnet.restore" description="Compile project code" >
+      <echo message="${dotnet.exe} build ${solution} --configuration=${build.configuration} --verbosity=minimal /p:Platform=${build.platform}" />
+      <exec program="${dotnet.exe}">
+        <arg value="build" />
+        <arg value="${solution}" />
+        <arg value="--configuration=${build.configuration}" />
+        <arg value="--verbosity=minimal" />
+        <arg value="/p:Platform=${build.platform}" />
+      </exec>
+    </target>
+    
+    <!-- Cleaning of the Solution -->
+    <target name="clean" depends="dotnet.restore" description="Clean the solution code">
+        <echo message="${dotnet.exe} clean ${solution} --configuration=${build.configuration} --verbosity=minimal" />
+        <exec program="${dotnet.exe}">
+          <arg value="clean" />
+          <arg value="${solution}" />
+          <arg value="--configuration=${build.configuration}" />
+          <arg value="--verbosity=minimal" />
+        </exec>
+    </target>
+    
+    <target name="clean.build.solution" depends="clean" description="Compile project code">
+        <echo message="${dotnet.exe} build ${solution} --no-incremental --configuration=${build.configuration} --verbosity=minimal /p:Platform=${build.platform}" />
+        <exec program="${dotnet.exe}">
+          <arg value="build" />
+          <arg value="${solution}" />
+          <arg value="--no-incremental" />
+          <arg value="--configuration=${build.configuration}" />
+          <arg value="--verbosity=minimal" />
+          <arg value="/p:Platform=${build.platform}" />
+        </exec>
+    </target>
+                 
+    <!-- Unit Test Execution -->
+    <target name="clean.tests" description="Cleans all of the Test Files">
+        <echo message="Now Deleting all known test files in ${test.results.dir}" />
+        <delete>
+          <fileset basedir="${test.results.dir}">
+            <include name="**\*" />
+          </fileset>
+        </delete>
+    </target>
+  
+  <target name="unit.tests" depends="clean.tests, build.solution" description="Runs all Unit Tests">
+    <foreach item="Folder" in="${source.dir}" property="SourceFolderName">
+      <foreach item="Folder" in="${SourceFolderName}" property="UnitTestFolderName">
+		<if test="${string::contains(UnitTestFolderName, unittest.identifier)}">
+                <property name="unit.test.directory.name" value="${directory::get-name(UnitTestFolderName)}" />
+                <echo message="Now Running Unit Tests on ${unit.test.directory.name}" />
+                <echo message="${dotnet.exe} test ${UnitTestFolderName}\${unit.test.directory.name}.csproj --no-build --results-directory &quot;${test.results.dir}&quot; --verbosity n" />
+                <exec program="dotnet.exe"
+                    workingdir="${build.output.dir}"
+                    commandline="test ${UnitTestFolderName}\${unit.test.directory.name}.csproj --no-build --results-directory &quot;${test.results.dir}&quot; --verbosity n"
+                    failonerror="true" />
+		</if>
+      </foreach>
+	</foreach>
+  </target>
+
+  <target name="functional.tests" depends="clean.tests, build.solution" description="Runs all Functional Tests">
+    <foreach item="Folder" in="${source.dir}" property="SourceFolderName">
+      <foreach item="Folder" in="${SourceFolderName}" property="FunctionalTestFolderName">
+            <if test="${string::contains(FunctionalTestFolderName, functionaltest.identifier)}">
+                <property name="functional.test.directory.name" value="${directory::get-name(FunctionalTestFolderName)}" />
+                    <echo message="Now Running Functional Tests on ${functional.test.directory.name}" />
+                    <echo message="${dotnet.exe} test ${FunctionalTestFolderName}\${functional.test.directory.name}.csproj --no-build --results-directory &quot;${test.results.dir}&quot; --verbosity n" />
+                    <exec program="dotnet.exe"
+                        workingdir="${build.output.dir}"
+                        commandline="test ${FunctionalTestFolderName}\${functional.test.directory.name}.csproj --no-build --results-directory &quot;${test.results.dir}&quot; --verbosity n"
+                        failonerror="true" />
+            </if>
+      </foreach>
+    </foreach>
+  </target>
+  
+    <target name="all.tests" description="Runs both Unit and Functional Tests in Succession">
+        <call target="unit.tests" />
+        <call target="functional.tests" />
+    </target>
+</project>

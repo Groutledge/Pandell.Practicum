@@ -1,0 +1,218 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D9B965D3-93FF-4E4E-85B2-B3BFB5433DD3}"
+ProjectSection(SolutionItems) = preProject
+	.nuget\nuget.config = .nuget\nuget.config
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Batch", "Batch", "{7177054B-8B51-4F8D-ADA4-9F4CD32F5A0E}"
+ProjectSection(SolutionItems) = preProject
+	Batch\what_is_this_folder.md = Batch\what_is_this_folder.md
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{32BC451F-0162-4915-9F8E-3F0D9CCE5338}"
+ProjectSection(SolutionItems) = preProject
+	Build\build.sh = Build\build.sh
+	Build\docker-compose.yml = Build\docker-compose.yml
+	Build\load.sh = Build\load.sh
+	Build\Pandell.Practicum.build = Build\Pandell.Practicum.build
+	Build\start.sh = Build\start.sh
+	Build\stop.sh = Build\stop.sh
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildOutput", "BuildOutput", "{52A8C745-9188-49F0-8A6E-71C02EF66F33}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestResults", "TestResults", "{C26A70E2-B883-42ED-A417-B6EFDFB39269}"
+ProjectSection(SolutionItems) = preProject
+	BuildOutput\TestResults\what_is_this_folder.md = BuildOutput\TestResults\what_is_this_folder.md
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{35A1686A-A820-4094-9745-C8130DF4F3BB}"
+ProjectSection(SolutionItems) = preProject
+	Config\Dev.properties = Config\Dev.properties
+	Config\Gerry.Routledge.properties = Config\Gerry.Routledge.properties
+	Config\Prod.properties = Config\Prod.properties
+	Config\QA.properties = Config\QA.properties
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{EAA666A5-C99A-4AFB-B1EE-BC7F50A7BB4C}"
+ProjectSection(SolutionItems) = preProject
+	Database\mysql.cnf = Database\mysql.cnf
+	Database\mysql-docker-entrypoint.sh = Database\mysql-docker-entrypoint.sh
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "001", "001", "{C418474A-8CB0-4348-B3C5-D7610AB7D43A}"
+ProjectSection(SolutionItems) = preProject
+	Database\001\001_001_Create_Practicum_Structure.sql = Database\001\001_001_Create_Practicum_Structure.sql
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{F426252F-E74C-4FEA-986A-A790EDF2A0A3}"
+ProjectSection(SolutionItems) = preProject
+	Deployment\what_is_this_folder.md = Deployment\what_is_this_folder.md
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{2A8C60B4-9863-451C-A93C-18B0D4CF11DC}"
+ProjectSection(SolutionItems) = preProject
+	Documents\Pandell Practicum.md = Documents\Pandell Practicum.md
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGetPackages", "NuGetPackages", "{DA44E6DD-1449-46DA-8770-73E6436EF606}"
+ProjectSection(SolutionItems) = preProject
+	NuGetPackages\what_is_this_folder.md = NuGetPackages\what_is_this_folder.md
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{7D8E454D-F2AF-47CE-91F8-24B83D5C6363}"
+ProjectSection(SolutionItems) = preProject
+	Templates\AppSettings.json.config.template = Templates\AppSettings.json.config.template
+	Templates\Log4Net.config.template = Templates\Log4Net.config.template
+	Templates\xunit.runner.json.template = Templates\xunit.runner.json.template
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestSettings", "TestSettings", "{68B6AABF-9060-499D-80A8-A3E75804C9A1}"
+ProjectSection(SolutionItems) = preProject
+	TestSettings\AllMSTests.runsettings = TestSettings\AllMSTests.runsettings
+	TestSettings\DotNet.CodeCleanup.DotSettings = TestSettings\DotNet.CodeCleanup.DotSettings
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{A70E061B-9F3C-409E-9163-9894A36960A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NAnt", "NAnt", "{3089322F-EE44-4C02-AEB4-24DCBD500862}"
+ProjectSection(SolutionItems) = preProject
+	Tools\NAnt\log4net.dll = Tools\NAnt\log4net.dll
+	Tools\NAnt\NAnt.CompressionTasks.dll = Tools\NAnt\NAnt.CompressionTasks.dll
+	Tools\NAnt\NAnt.CompressionTasks.xml = Tools\NAnt\NAnt.CompressionTasks.xml
+	Tools\NAnt\NAnt.Core.dll = Tools\NAnt\NAnt.Core.dll
+	Tools\NAnt\NAnt.Core.xml = Tools\NAnt\NAnt.Core.xml
+	Tools\NAnt\NAnt.DotNetTasks.dll = Tools\NAnt\NAnt.DotNetTasks.dll
+	Tools\NAnt\NAnt.DotNetTasks.xml = Tools\NAnt\NAnt.DotNetTasks.xml
+	Tools\NAnt\NAnt.exe = Tools\NAnt\NAnt.exe
+	Tools\NAnt\NAnt.exe.config = Tools\NAnt\NAnt.exe.config
+	Tools\NAnt\NAnt.MSNetTasks.dll = Tools\NAnt\NAnt.MSNetTasks.dll
+	Tools\NAnt\NAnt.MSNetTasks.xml = Tools\NAnt\NAnt.MSNetTasks.xml
+	Tools\NAnt\NAnt.NUnit.dll = Tools\NAnt\NAnt.NUnit.dll
+	Tools\NAnt\NAnt.NUnit.xml = Tools\NAnt\NAnt.NUnit.xml
+	Tools\NAnt\NAnt.NUnit1Tasks.dll = Tools\NAnt\NAnt.NUnit1Tasks.dll
+	Tools\NAnt\NAnt.NUnit1Tasks.xml = Tools\NAnt\NAnt.NUnit1Tasks.xml
+	Tools\NAnt\NAnt.NUnit2Tasks.dll = Tools\NAnt\NAnt.NUnit2Tasks.dll
+	Tools\NAnt\NAnt.NUnit2Tasks.xml = Tools\NAnt\NAnt.NUnit2Tasks.xml
+	Tools\NAnt\NAnt.SourceControlTasks.dll = Tools\NAnt\NAnt.SourceControlTasks.dll
+	Tools\NAnt\NAnt.SourceControlTasks.xml = Tools\NAnt\NAnt.SourceControlTasks.xml
+	Tools\NAnt\NAnt.VisualCppTasks.dll = Tools\NAnt\NAnt.VisualCppTasks.dll
+	Tools\NAnt\NAnt.VisualCppTasks.xml = Tools\NAnt\NAnt.VisualCppTasks.xml
+	Tools\NAnt\NAnt.VSNetTasks.dll = Tools\NAnt\NAnt.VSNetTasks.dll
+	Tools\NAnt\NAnt.VSNetTasks.xml = Tools\NAnt\NAnt.VSNetTasks.xml
+	Tools\NAnt\NAnt.Win32Tasks.dll = Tools\NAnt\NAnt.Win32Tasks.dll
+	Tools\NAnt\NAnt.Win32Tasks.xml = Tools\NAnt\NAnt.Win32Tasks.xml
+	Tools\NAnt\NAnt.xml = Tools\NAnt\NAnt.xml
+	Tools\NAnt\NDoc.Documenter.NAnt.dll = Tools\NAnt\NDoc.Documenter.NAnt.dll
+	Tools\NAnt\NDoc.Documenter.NAnt.xml = Tools\NAnt\NDoc.Documenter.NAnt.xml
+	Tools\NAnt\scvs.exe = Tools\NAnt\scvs.exe
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NAntContrib", "NAntContrib", "{02A41096-22AA-410B-893A-C1A0914EF05B}"
+ProjectSection(SolutionItems) = preProject
+	Tools\NAntContrib\CollectionGen.dll = Tools\NAntContrib\CollectionGen.dll
+	Tools\NAntContrib\Interop.MsmMergeTypeLib.dll = Tools\NAntContrib\Interop.MsmMergeTypeLib.dll
+	Tools\NAntContrib\Interop.StarTeam.dll = Tools\NAntContrib\Interop.StarTeam.dll
+	Tools\NAntContrib\Interop.WindowsInstaller.dll = Tools\NAntContrib\Interop.WindowsInstaller.dll
+	Tools\NAntContrib\NAnt.Contrib.Tasks.dll = Tools\NAntContrib\NAnt.Contrib.Tasks.dll
+	Tools\NAntContrib\NAnt.Contrib.Tasks.xml = Tools\NAntContrib\NAnt.Contrib.Tasks.xml
+	Tools\NAntContrib\SLiNgshoT.Core.dll = Tools\NAntContrib\SLiNgshoT.Core.dll
+	Tools\NAntContrib\SLiNgshoT.exe = Tools\NAntContrib\SLiNgshoT.exe
+	Tools\NAntContrib\SourceSafe.Interop.dll = Tools\NAntContrib\SourceSafe.Interop.dll
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "extensions", "extensions", "{3AACB58F-C6D1-4575-9ECE-16691AF57D05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{FF7FAF54-0983-4DDA-8497-C027E46D3678}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{11B5AC40-E923-4C64-B8D6-EE41A241FA8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.0", "2.0", "{6DA61BF8-FCA4-40F3-BC3C-FE6B8022C86E}"
+ProjectSection(SolutionItems) = preProject
+	Tools\NAnt\extensions\common\2.0\NAnt.MSBuild.dll = Tools\NAnt\extensions\common\2.0\NAnt.MSBuild.dll
+	Tools\NAnt\extensions\common\2.0\NAnt.MSBuild.xml = Tools\NAnt\extensions\common\2.0\NAnt.MSBuild.xml
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.0", "4.0", "{E5A81C08-774D-41D9-9F77-B05E9D4C9FA7}"
+ProjectSection(SolutionItems) = preProject
+	Tools\NAnt\extensions\common\4.0\NAnt.MSBuild.dll = Tools\NAnt\extensions\common\4.0\NAnt.MSBuild.dll
+	Tools\NAnt\extensions\common\4.0\NAnt.MSBuild.xml = Tools\NAnt\extensions\common\4.0\NAnt.MSBuild.xml
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{B46E0F2D-E207-4DFA-9305-FDCB323F8EB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.0", "2.0", "{BE30734E-7302-4F35-9BF7-E88342FFBF66}"
+ProjectSection(SolutionItems) = preProject
+	Tools\NAnt\lib\common\2.0\nunit.core.dll = Tools\NAnt\lib\common\2.0\nunit.core.dll
+	Tools\NAnt\lib\common\2.0\nunit.core.interfaces.dll = Tools\NAnt\lib\common\2.0\nunit.core.interfaces.dll
+	Tools\NAnt\lib\common\2.0\nunit.framework.dll = Tools\NAnt\lib\common\2.0\nunit.framework.dll
+	Tools\NAnt\lib\common\2.0\nunit.util.dll = Tools\NAnt\lib\common\2.0\nunit.util.dll
+	Tools\NAnt\lib\common\2.0\nunit-console.exe = Tools\NAnt\lib\common\2.0\nunit-console.exe
+	Tools\NAnt\lib\common\2.0\nunit-console.exe.config = Tools\NAnt\lib\common\2.0\nunit-console.exe.config
+	Tools\NAnt\lib\common\2.0\nunit-console-runner.dll = Tools\NAnt\lib\common\2.0\nunit-console-runner.dll
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "neutral", "neutral", "{D3EE1BE5-5E6C-4C54-91B6-D7029F906B7D}"
+ProjectSection(SolutionItems) = preProject
+	Tools\NAnt\lib\common\neutral\ICSharpCode.SharpCvsLib.Console.dll = Tools\NAnt\lib\common\neutral\ICSharpCode.SharpCvsLib.Console.dll
+	Tools\NAnt\lib\common\neutral\ICSharpCode.SharpCvsLib.dll = Tools\NAnt\lib\common\neutral\ICSharpCode.SharpCvsLib.dll
+	Tools\NAnt\lib\common\neutral\ICSharpCode.SharpZipLib.dll = Tools\NAnt\lib\common\neutral\ICSharpCode.SharpZipLib.dll
+	Tools\NAnt\lib\common\neutral\NDoc.Core.dll = Tools\NAnt\lib\common\neutral\NDoc.Core.dll
+	Tools\NAnt\lib\common\neutral\NDoc.Documenter.Msdn.dll = Tools\NAnt\lib\common\neutral\NDoc.Documenter.Msdn.dll
+	Tools\NAnt\lib\common\neutral\NDoc.ExtendedUI.dll = Tools\NAnt\lib\common\neutral\NDoc.ExtendedUI.dll
+	Tools\NAnt\lib\common\neutral\netDumbster.dll = Tools\NAnt\lib\common\neutral\netDumbster.dll
+	Tools\NAnt\lib\common\neutral\NUnitCore.dll = Tools\NAnt\lib\common\neutral\NUnitCore.dll
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{21999D7F-B449-43C6-A0DE-592CF746C102}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{18D5370A-EC52-438A-BFED-C92D339CC25B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{7B21E76E-19F0-4773-ACFA-BAA0C30E784F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pandell.Practicum.App", "Source\App\Pandell.Practicum.App\Pandell.Practicum.App.csproj", "{4F53B42E-276C-44A2-A4D3-476898EC7255}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pandell.Practicum.UnitTests", "Source\Test\Pandell.Practicum.UnitTests\Pandell.Practicum.UnitTests.csproj", "{D5CA0DAE-3FC9-4D1D-98AA-9C89D7596EA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pandell.Practicum.FunctionalTests", "Source\Test\Pandell.Practicum.FunctionalTests\Pandell.Practicum.FunctionalTests.csproj", "{B8AF200C-7A14-4FCE-B2AB-AFFD312DE5B9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C26A70E2-B883-42ED-A417-B6EFDFB39269} = {52A8C745-9188-49F0-8A6E-71C02EF66F33}
+		{C418474A-8CB0-4348-B3C5-D7610AB7D43A} = {EAA666A5-C99A-4AFB-B1EE-BC7F50A7BB4C}
+		{3089322F-EE44-4C02-AEB4-24DCBD500862} = {A70E061B-9F3C-409E-9163-9894A36960A5}
+		{02A41096-22AA-410B-893A-C1A0914EF05B} = {A70E061B-9F3C-409E-9163-9894A36960A5}
+		{3AACB58F-C6D1-4575-9ECE-16691AF57D05} = {3089322F-EE44-4C02-AEB4-24DCBD500862}
+		{FF7FAF54-0983-4DDA-8497-C027E46D3678} = {3089322F-EE44-4C02-AEB4-24DCBD500862}
+		{11B5AC40-E923-4C64-B8D6-EE41A241FA8D} = {3AACB58F-C6D1-4575-9ECE-16691AF57D05}
+		{6DA61BF8-FCA4-40F3-BC3C-FE6B8022C86E} = {11B5AC40-E923-4C64-B8D6-EE41A241FA8D}
+		{E5A81C08-774D-41D9-9F77-B05E9D4C9FA7} = {11B5AC40-E923-4C64-B8D6-EE41A241FA8D}
+		{B46E0F2D-E207-4DFA-9305-FDCB323F8EB4} = {FF7FAF54-0983-4DDA-8497-C027E46D3678}
+		{BE30734E-7302-4F35-9BF7-E88342FFBF66} = {B46E0F2D-E207-4DFA-9305-FDCB323F8EB4}
+		{D3EE1BE5-5E6C-4C54-91B6-D7029F906B7D} = {B46E0F2D-E207-4DFA-9305-FDCB323F8EB4}
+		{18D5370A-EC52-438A-BFED-C92D339CC25B} = {21999D7F-B449-43C6-A0DE-592CF746C102}
+		{7B21E76E-19F0-4773-ACFA-BAA0C30E784F} = {21999D7F-B449-43C6-A0DE-592CF746C102}
+		{4F53B42E-276C-44A2-A4D3-476898EC7255} = {18D5370A-EC52-438A-BFED-C92D339CC25B}
+		{D5CA0DAE-3FC9-4D1D-98AA-9C89D7596EA7} = {7B21E76E-19F0-4773-ACFA-BAA0C30E784F}
+		{B8AF200C-7A14-4FCE-B2AB-AFFD312DE5B9} = {7B21E76E-19F0-4773-ACFA-BAA0C30E784F}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F53B42E-276C-44A2-A4D3-476898EC7255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F53B42E-276C-44A2-A4D3-476898EC7255}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F53B42E-276C-44A2-A4D3-476898EC7255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F53B42E-276C-44A2-A4D3-476898EC7255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5CA0DAE-3FC9-4D1D-98AA-9C89D7596EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5CA0DAE-3FC9-4D1D-98AA-9C89D7596EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5CA0DAE-3FC9-4D1D-98AA-9C89D7596EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5CA0DAE-3FC9-4D1D-98AA-9C89D7596EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8AF200C-7A14-4FCE-B2AB-AFFD312DE5B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8AF200C-7A14-4FCE-B2AB-AFFD312DE5B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8AF200C-7A14-4FCE-B2AB-AFFD312DE5B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8AF200C-7A14-4FCE-B2AB-AFFD312DE5B9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,7 @@
+<RunSettings>  
+  <!-- MSTest adapter -->  
+  <MSTest>   
+    <DeleteDeploymentDirectoryAfterTestRunIsComplete>True</DeleteDeploymentDirectoryAfterTestRunIsComplete>  
+    <DeploymentEnabled>False</DeploymentEnabled>  
+  </MSTest>  
+</RunSettings>  

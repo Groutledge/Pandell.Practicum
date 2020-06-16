@@ -1,0 +1,2 @@
+# Why is this Folder Here?
+This folder was used in the past to store .trx files with executing MSTest based tests, or even outputting the XUnit test runs as a .trx file into this location. We used to use these output files as a contract with the CI/CD servers to ensure all tests pass before a deployment could be executed. Although not shown in this practicum, other solutions I have written do perform this function! 

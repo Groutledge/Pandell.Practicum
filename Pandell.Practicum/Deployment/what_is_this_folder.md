@@ -1,0 +1,2 @@
+# Why is this Folder Here?
+This folder is where the deployments are created, and eventually FTP'd or sent to a destination server (like Prod, QA, etc.). Whether by CI/CD software, or the developer performing the deployment themselves, NAnt will deposit the published files within this folder (under the appropriate environment), and perform the deployment process thereon. 

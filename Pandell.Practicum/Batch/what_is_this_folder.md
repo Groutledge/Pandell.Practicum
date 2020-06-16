@@ -1,0 +1,2 @@
+# Why is this Folder Here?
+This folder I've used in the past for storing bash, powershell or batch scripts that NAnt would utilize with different operations required for CI/CD. For example, if I needed to install local User Secrets (such as a SendGrid credentials), or say Facebook or Google Authentication User Secrets, I would have those scripts within this folder, that would be called and executed during different CI/CD runs.  

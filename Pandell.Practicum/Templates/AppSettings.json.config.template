@@ -1,0 +1,21 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "server=${pandell.database.server.name};port=${pandell.database.port};database=${pandell.database.name};uid=${pandell.database.user.name};pwd='${pandell.database.user.password}';AllowUserVariables=True;SslMode=${pandell.database.ssl.mode};Default Command Timeout=${pandell.database.timeout}"
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "Debug": {
+      "LogLevel": {
+        "Default": "${debug.log.level}",
+        "System": "Information",
+        "Microsoft": "Information"
+      }
+    },
+    "Console": {
+      "LogLevel": {
+        "Default": "${debug.log.level}"
+      }
+    }
+  },
+  "AllowedHosts": "*"
+}
