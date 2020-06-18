@@ -34,7 +34,8 @@
     <!-- Project Names -->
     <property name="unittest.identifier" value="UnitTests" />
     <property name="functionaltest.identifier" value="FunctionalTests" />
-    
+    <property name="performancetest.identifier" value="PerformanceTests" />
+        
     <!-- Deployment Directory Information -->
     <property name="source.app.dir" value="${source.dir}\App" />
 
@@ -200,6 +201,22 @@
     </foreach>
   </target>
   
+    <target name="performance.tests" depends="clean.tests, build.solution" description="Runs all Performance Tests">
+      <foreach item="Folder" in="${source.dir}" property="SourceFolderName">
+        <foreach item="Folder" in="${SourceFolderName}" property="PerformanceTestFolderName">
+              <if test="${string::contains(PerformanceTestFolderName, performancetest.identifier)}">
+                  <property name="performance.test.directory.name" value="${directory::get-name(PerformanceTestFolderName)}" />
+                      <echo message="Now Running Performance Tests on ${performance.test.directory.name}" />
+                      <echo message="${dotnet.exe} test ${PerformanceTestFolderName}\${performance.test.directory.name}.csproj --no-build --results-directory &quot;${test.results.dir}&quot; --verbosity n" />
+                      <exec program="dotnet.exe"
+                          workingdir="${build.output.dir}"
+                          commandline="test ${PerformanceTestFolderName}\${performance.test.directory.name}.csproj --no-build --results-directory &quot;${test.results.dir}&quot; --verbosity n"
+                          failonerror="true" />
+              </if>
+        </foreach>
+      </foreach>
+    </target>
+    
     <target name="all.tests" description="Runs both Unit and Functional Tests in Succession">
         <call target="unit.tests" />
         <call target="functional.tests" />

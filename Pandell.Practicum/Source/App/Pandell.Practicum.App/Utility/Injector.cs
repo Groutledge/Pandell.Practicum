@@ -72,13 +72,13 @@ namespace Pandell.Practicum.App.Utility
                     .LifestyleSingleton());
 
             container.Register(
-                Component.For<IService<RandomSequenceModel>>()
-                    .ImplementedBy<RandomSequenceService>()
+                Component.For<IRandomSequenceGeneratorService>()
+                    .ImplementedBy<RandomSequenceGeneratorService>()
                     .LifestyleSingleton());
             
             container.Register(
-                Component.For<IRandomSequenceGeneratorService>()
-                    .ImplementedBy<RandomSequenceGeneratorService>()
+                Component.For<IService<RandomSequenceModel>>()
+                    .ImplementedBy<RandomSequenceService>()
                     .LifestyleSingleton());
         }
     }

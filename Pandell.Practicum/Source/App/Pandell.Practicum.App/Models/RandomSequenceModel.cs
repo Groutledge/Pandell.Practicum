@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Pandell.Practicum.App.Models
@@ -9,6 +10,6 @@ namespace Pandell.Practicum.App.Models
         public Guid Id { get; set; }
         
         [Display(Name = "Random Sequence")]
-        public string RandomSequence { get; set; }
+        public IEnumerable<int> RandomSequence { get; set; }
     }
 }

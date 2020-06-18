@@ -36,7 +36,7 @@ namespace Pandell.Practicum.UnitTests.Utility.Abstraction
             var rollingFileAppender = ((Hierarchy) ApplicationLogger.LoggerRepository).Root.Appenders.OfType<RollingFileAppender>().First();
             var canAccessLogFile = false;
 
-            for (int i = 0; i < retryAttempts; i++)
+            for (var i = 0; i < retryAttempts; i++)
             {
                 try
                 {
@@ -59,7 +59,7 @@ namespace Pandell.Practicum.UnitTests.Utility.Abstraction
             string allLogFileContents = null;
             var canAccessLogFile = false;
 
-            for (int i = 0; i < retryAttempts; i++)
+            for (var i = 0; i < retryAttempts; i++)
             {
                 try
                 {

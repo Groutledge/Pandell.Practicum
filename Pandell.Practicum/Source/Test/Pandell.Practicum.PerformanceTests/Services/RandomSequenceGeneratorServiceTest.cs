@@ -138,7 +138,6 @@ namespace Pandell.Practicum.PerformanceTests.Services
         
         private List<TopRandomSequencePerformance> RateAllRandomSequenceMethodsOverMultipleIterations(List<TopRandomSequencePerformance> topRandomSequencePerformances)
         {
-
             var allMethodsEvaluated =
                 (from randomSequenceMethod in EnumerationExtensions.ToEnumList<RandomSequenceMethodCodes>()
                     let totalExecutionTimeInTicks = topRandomSequencePerformances

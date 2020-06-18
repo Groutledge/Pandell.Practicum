@@ -1,46 +1,101 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Pandell.Practicum.App.Domain;
+using Pandell.Practicum.App.Map;
 using Pandell.Practicum.App.Models;
 using Pandell.Practicum.App.Repository;
+using Pandell.Practicum.App.Utility;
 
 namespace Pandell.Practicum.App.Services
 {
-    public class RandomSequenceService : AbstractService<RandomSequence, RandomSequenceModel>
+    public interface IRandomSequenceService : IService<RandomSequenceModel>
     {
-        public RandomSequenceService(IRepository<RandomSequence, Guid> repository, IIdService idService) : base(repository, idService)
+        Task<IEnumerable<int>> GenerateRandomSequence();
+    }
+    
+    public class RandomSequenceService : AbstractService<RandomSequence, RandomSequenceModel>, IRandomSequenceService
+    {
+        private readonly IRandomSequenceGeneratorService randomSequenceGeneratorService;
+        
+        public RandomSequenceService(IRepository<RandomSequence, Guid> repository, 
+            IIdService idService,
+            IRandomSequenceGeneratorService randomSequenceGeneratorService) : base(repository, idService)
         {
+            this.randomSequenceGeneratorService = randomSequenceGeneratorService;
         }
 
-        public override Task<List<RandomSequenceModel>> GetAllAsync()
+        protected override MapperConfiguration GenerateMapperConfiguration()
         {
-            throw new NotImplementedException();
+            return new RandomSequenceMapperConfiguration().Configure();
         }
 
-        public override Task<RandomSequenceModel> AddAsync(RandomSequenceModel modelToAdd)
+        public override async Task<List<RandomSequenceModel>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var allSequences = await Repository.GetAllAsync().ConfigureAwait(false);
+            return Mapper.Map<List<RandomSequence>, List<RandomSequenceModel>>(allSequences);
         }
 
-        public override Task<RandomSequenceModel> RemoveAsync(RandomSequenceModel modelToRemove)
+        public override async Task<RandomSequenceModel> AddAsync(RandomSequenceModel modelToAdd)
         {
-            throw new NotImplementedException();
+            var domainToAdd = Mapper.Map<RandomSequenceModel, RandomSequence>(modelToAdd);
+            
+            return await ExecuteOperation(domainToAdd,
+                    item =>
+                    {
+                        item.Id = IdService.GenerateId();
+                        item.DateInserted = Clock.UtcNow();
+                        item.LastModifiedBy = Environment.UserName;
+                        return item;
+                    },
+                    item => Repository.AddAsync(item))
+                .ConfigureAwait(false);
         }
 
-        public override Task<RandomSequenceModel> UpdateAsync(RandomSequenceModel modelToUpdate)
+        public override async Task<RandomSequenceModel> RemoveAsync(RandomSequenceModel modelToRemove)
         {
-            throw new NotImplementedException();
+            var foundItemToRemove = await Repository.GetByIdAsync(modelToRemove.Id).ConfigureAwait(false);
+            await Repository.RemoveAsync(foundItemToRemove).ConfigureAwait(false);
+            return modelToRemove;
         }
 
-        public override Task<RandomSequenceModel> GetByPrimaryKeyAsync(Guid id)
+        public override async Task<RandomSequenceModel> UpdateAsync(RandomSequenceModel modelToUpdate)
         {
-            throw new NotImplementedException();
+            var convertedToDomain = Mapper.Map<RandomSequenceModel, RandomSequence>(modelToUpdate);
+            var foundDomain = await Repository.GetByIdAsync(modelToUpdate.Id).ConfigureAwait(false);
+            foundDomain = Mapper.Map(convertedToDomain, foundDomain);
+                
+            return await ExecuteOperation(foundDomain,
+                    item =>
+                    {
+                        item.DateUpdated = Clock.UtcNow();
+                        item.LastModifiedBy = Environment.UserName;
+                        return item;
+                    }, item => Repository.UpdateAsync(item))
+                .ConfigureAwait(false);
         }
 
-        public override Task<bool> DoesExistAsync(Guid id)
+        public override async Task<RandomSequenceModel> GetByPrimaryKeyAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var sequenceItem = await Repository.GetByIdAsync(id).ConfigureAwait(false);
+            return Mapper.Map<RandomSequence, RandomSequenceModel>(sequenceItem);
+        }
+
+        public override async Task<bool> DoesExistAsync(Guid id)
+        {
+            var foundSequence = await Repository.GetByIdAsync(id).ConfigureAwait(false);
+            return foundSequence != null;
+        }
+
+        public Task<IEnumerable<int>> GenerateRandomSequence()
+        {
+            return Task.Run(() => randomSequenceGeneratorService.ThirdGenerateRandomSequenceMethod());
+        }
+
+        protected override async Task<RandomSequenceModel> GetByDomainAsync(RandomSequence itemToFind)
+        {
+            return await GetByPrimaryKeyAsync(itemToFind.Id).ConfigureAwait(false);
         }
     }
 }

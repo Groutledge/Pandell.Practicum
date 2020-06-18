@@ -29,15 +29,15 @@ namespace Pandell.Practicum.UnitTests.Utility
 
         private void AssertContainerOnApplyingDatabaseContext()
         {
-            ApplicationDbContext applicationDbContext = GenerateApplicationDbContext();
+            var applicationDbContext = GenerateApplicationDbContext();
             Injector.AddApplicationDbContext(applicationDbContext);
             Injector.IsAlreadyRegistered().Should().BeTrue();
         }
 
         private static void AssertCertainInstancesInsideContainer()
         {
-            IRepository<RandomSequence, Guid> repository = Injector.Resolve<IRepository<RandomSequence, Guid>>();
-            IService<RandomSequenceModel> service = Injector.Resolve<IService<RandomSequenceModel>>();
+            var repository = Injector.Resolve<IRepository<RandomSequence, Guid>>();
+            var service = Injector.Resolve<IService<RandomSequenceModel>>();
 
             (repository.GetType() == typeof(RandomSequenceRepository)).Should().BeTrue();
             (service.GetType() == typeof(RandomSequenceService)).Should().BeTrue();

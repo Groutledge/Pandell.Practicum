@@ -47,7 +47,7 @@ namespace Pandell.Practicum.UnitTests.Utility
         public async Task LogExceptionAsync_LogsAnExceptionMessage_ToTheLogFile()
         {
             const string exceptionMessage = "This is an exception message";
-            Exception testException = new Exception("This is an exception message");
+            var testException = new Exception("This is an exception message");
             
             await ApplicationLogger.LogExceptionAsync(testException.Message, testException).ConfigureAwait(false);    
             assertApplicationLogger.AssertMessageIsInLogFile(exceptionMessage, retryAttempts, millisecondDelay);

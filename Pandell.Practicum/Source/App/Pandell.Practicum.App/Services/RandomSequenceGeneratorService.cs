@@ -17,20 +17,14 @@ namespace Pandell.Practicum.App.Services
     
     public class RandomSequenceGeneratorService : IRandomSequenceGeneratorService
     {
-        private readonly Random random;
-
-        public RandomSequenceGeneratorService()
-        {
-            random = new Random();
-        }
-        
         [SuppressMessage("ReSharper", "EmptyEmbeddedStatement")]
         public IEnumerable<int> FirstGenerateRandomSequenceMethod()
         {
+            var random = new Random();
             var randomNumbers = new HashSet<int>();
             
             for (var i = 0; i < (int) RandomSequenceCodes.MaxSequence; i++)
-                while (!randomNumbers.Add(random.Next()));
+                while (!randomNumbers.Add(random.Next((int) RandomSequenceCodes.MaxSequence)));
 
             return randomNumbers;
         }
