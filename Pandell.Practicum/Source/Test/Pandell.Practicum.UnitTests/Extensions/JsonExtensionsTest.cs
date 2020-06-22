@@ -31,7 +31,7 @@ namespace Pandell.Practicum.UnitTests.Extensions
         
         #region Class Members
         
-        private IEnumerable<int> TestSetOfIntegers => new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        private List<int> TestSetOfIntegers => new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         private JsonObject<string[]> TestJsonObject => new JsonObject<string[]>(TestParameterCodes.IntegerJsonString.ToDescription());
         
         #endregion

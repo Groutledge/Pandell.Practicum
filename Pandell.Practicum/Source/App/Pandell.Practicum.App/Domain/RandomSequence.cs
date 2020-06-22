@@ -14,7 +14,7 @@ namespace Pandell.Practicum.App.Domain
         
         public override object Clone()
         {
-            RandomSequence clonedRandomSequence = new RandomSequence();
+            var clonedRandomSequence = new RandomSequence();
             clonedRandomSequence.Id = Id;
             clonedRandomSequence.GeneratedSequence = GeneratedSequence;
             clonedRandomSequence = (RandomSequence) CloneCommonProperties(clonedRandomSequence);

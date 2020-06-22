@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Castle.Core.Internal;
 
 namespace Pandell.Practicum.App.Extensions
@@ -11,7 +10,7 @@ namespace Pandell.Practicum.App.Extensions
         {
             return listToGenerateBatchCountFrom.IsNullOrEmpty()
                 ? 0
-                : (int) Math.Ceiling(listToGenerateBatchCountFrom.Count() / (double) batchSize);
+                : (int) Math.Ceiling(listToGenerateBatchCountFrom.Count / (double) batchSize);
         }
     }
 }

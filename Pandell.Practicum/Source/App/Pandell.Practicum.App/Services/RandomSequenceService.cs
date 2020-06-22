@@ -8,6 +8,7 @@ using Pandell.Practicum.App.Map;
 using Pandell.Practicum.App.Models;
 using Pandell.Practicum.App.Repository;
 using Pandell.Practicum.App.Utility;
+using static Pandell.Practicum.App.Utility.ApplicationLogger;
 
 namespace Pandell.Practicum.App.Services
 {
@@ -91,10 +92,21 @@ namespace Pandell.Practicum.App.Services
 
         public Task<RandomSequenceModel> GenerateRandomSequence()
         {
-            return Task.Run(() => new RandomSequenceModel
+            return Task.Run(async () =>
             {
-                Id = IdService.GenerateId(),
-                RandomSequence = randomSequenceGeneratorService.ThirdGenerateRandomSequenceMethod(),
+                try
+                {
+                    return new RandomSequenceModel
+                    {
+                        Id = IdService.GenerateId(),
+                        RandomSequence = randomSequenceGeneratorService.ThirdGenerateRandomSequenceMethod(),
+                    };
+                }
+                catch (Exception exception)
+                {
+                    await LogExceptionAsync(exception.Message, exception);
+                    return default;
+                }
             });
         }
 
