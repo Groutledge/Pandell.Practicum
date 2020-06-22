@@ -12,13 +12,22 @@ First and foremost, thanks for taking the time to look at my solution! There are
 6. .NETCore 3.1
 7. DotNet Hosting
 
-You will notice that I have added 2 functions to the requirements:<br>
-A. MSFT Identity Framework (the need to login, before seeing the CRUD Exercise)<br>
-B. Editing of the Category Items (not listed in the initial requirement)<br>
+## Special Notes - Code Review
+Please pay attention to the ```RandomSequenceGeneratorService``` class. Inside there, I wrote 3 algorithms to perform the base requirement of generating 10,000 random numbers:
 
-The reason for the Identity Framework addition, was to display how I can run an SQL Script (injecting seed data into my Dockerized MySQL instance), and how I can also run Entity Framework Migrations on that same database, setting up both the login and seed data through the bash scripts. Normally I would have either Entity Framework, or SQL Scripts centralized with all the database activity required upon start up. But in this event, I more or less wanted to show how I've ran both migrations (SQL files and Entity Framework), with the use of the bash scripts.
+1. Basic loop into a HashSet<int> with utilizing the Random class to add to the HashSet
+2. An Enumerable that returns 10,000 numbers and uses the NuGet Package MoreLinq to Shuffle those numbers
+3. An Enumerable that returns 10,000 numbers and uses a local extension algorithm to Shuuffle those numbers
 
-_NOTE:_ I use NAnt, a CI/CD tool that will indeed create my appsettings.json and log4net.config files in all my projects. In order to have the proper configuration files, please:<br>
+There is also a ```Pandell.Practicum.PerformanceTests``` project, which can be executed through NAnt via the ```./build.sh performance.tests``` target, which tests all 3 algorithms on:
+1. Which one is the fastest in 1 iteration
+2. Which one was the fastest in 100 iterations
+
+Both tests use the Ticks on the TimeSpan to determine the amount of time of execution. Although after running the Performance Tests a number of iterations, the Winner of the fastest algorith was a toss up between the ```Second``` or ```Third``` Method within the ```RandomSequenceGeneratorService``` class, so by my own discretion, decided to base the whole CRUD application off of the <b>THIRD</b> 10,000 randomizer method from ```RandomSequenceGeneratorService```
+
+So, this solution has Performance Tests that determine which was the fastest method, and the generally accepted fastest method was used for the CRUD of the application.
+
+_SIDE NOTE:_ I use NAnt, a CI/CD tool that will indeed create my appsettings.json and log4net.config files in all my projects. In order to have the proper configuration files, please:<br>
 A. Navigate in a bash terminal to the Build Folder<br>
 B. Type in the following command in the Terminal: ```./build.sh build.solution```<br>
    [This will compile the solution, and will give you the right configuration files into the projects]<br>
@@ -45,7 +54,8 @@ From opening the Solution, you will see a number of folders, which are as follow
 - *NOTE:* You will see I have a Gerry.Routledge.properties file - this corresponds to my Windows Login Name (Gerry.Routledge). Normally, us Devs each have different machines and our installations of software are not always in the same directories. So this file is normally incoporated in the NAnt execution, which would contain executable locations that are native to my machine. Each Developer on a project would have their own .properties file in the configuration folder. For simplicity sake, the property I have within my given properties file also exists in the Dev.properties file, so the solution should still execute
 
 ### F. Database
-- This folder contains all database scripts needed, separated by version numbers (IE: 001 in this case). Ideally, when building a software project, 001 (first database version), will probably contain all the CREATE DATABASE scripts, tables, etc. As the product is worked on over time and matures, more version folders are added (like 002, 003, etc.) which you may only want to run those specific versions. NAnt has the capability to do this. You will also see 2 mysql files in this folder as well - this is required for Docker, as this solution hosts MySQL in a docker container, and will execute the script in 001 on your Dockerized SQL instance (creating the TestEntity table and populating it with seed data). 
+- This folder contains all database scripts needed, separated by version numbers (IE: 001 in this case). Ideally, when building a software project, 001 (first database version), will probably contain all the CREATE DATABASE scripts, tables, etc. As the product is worked on over time and matures, more version folders are added (like 002, 003, etc.) which you may only want to run those specific versions. NAnt has the capability to do this. You will also see 2 mysql files in this folder as well - this is required for Docker, as this solution hosts MySQL in a docker container, and will execute the script in 001 on your Dockerized SQL instance (if one was created). 
+_NOTE:_ I only used Entity Framework Migrations for this Practicum; however, the way this project is set up, it can run either base SQL Scripts, or Entity Framework Migrations, or even both!
 
 ### G. Deployment
 - Although not in scope for the practicum, the Deployment folder is where we normally store the published artifacts from a ```dotnet publish``` command, which in the NAnt deployment steps, will also SFTP those files to any server needed (IE: if deploying say a DEV environment, NAnt will publish the artifacts to this folder, and if the steps are inside the .build file, will also deploy those artifacts where needed
@@ -58,6 +68,7 @@ From opening the Solution, you will see a number of folders, which are as follow
 
 ### J. Source
 - This is now the code. There are 2 folders - App and Test. App contains the production code, which is the ASP.NET Core MVC web site for the practicum. Inside the Test folder, I have 2 projects - one is a Unit Test project, and the other is a Functional Test project. Functional Tests will execute full on DAO (database interaction) tests on MySQL, while the unit tests test specific functionality of the production code (such as, does my log file class work with Log4net? Do some of my extension classes work as expected?). This is normally how I set up software projects, as we deploy the production code, and the unit and functional tests become their own DLLs, to be ran on separate pipelines within a CI/CD world
+- Like some of my past projects, I have also included a PerformanceTest XUnit project, which tested 3 numerical randomizer algorithms, and based on those results, chose 1 of those algos to create the CRUD ASP.NET Core Web Site (Method ```3``` had become the algo winner!)
 
 ### K. Templates
 - Quite important - templates contain the appsettings and log4net config file templates. When using NAnt, it will apply the appropriate variables to these template files, and copy them into each project directory with the right corresponding values (like, for example, connection strings to databases - they always differ from each environment). 
@@ -66,7 +77,7 @@ From opening the Solution, you will see a number of folders, which are as follow
 - I'm a huge fan of ReSharper, so inside this folder I've included my settings for .NET code styles, and if I were to use the Framework and Microsoft's Test Framework, the AllMSTests.runsettings deletes the local test file output from executing MSTests locally on your machine (not applicable here with .NETCore, but I have included it to show this is what we had for Framework projects). 
 
 ### M. Tools
-- The Tools folder is a throw-back from the days before NuGet, however, it still contains relevant .msi's or executables required for every developer to have their environment in sync. In this case, the Tools folder houses NAnt, which is used for CI/CD automations. Normally other tools can be added, like IIS Express, DotNet Hosting, etc. (something I normally add to ensure all developers are on the same versions of software), but to keep the packaging small, I've left these out of the Tools folder for now. 
+- The Tools folder is a throw-back from the days before NuGet, however, it can contain relevant .msi's or executables required for every developer to have their environment in sync. In this case, the Tools folder houses NAnt, which is used for CI/CD automations. Normally other tools can be added, like IIS Express, DotNet Hosting, etc. (something I normally add to ensure all developers are on the same versions of software), but to keep the packaging small, I've left these out of the Tools folder for now. 
 
 ## How To Run The Solution - IIS Express in Visual Studio
 A. In the Bash Terminal, navigate to the Build folder and run the script:
@@ -155,9 +166,7 @@ C. Enumerations - I am a huge enum fan - any constants I have in my producion co
 Rest of the folders are pretty self-explanatory.
 
 ## Other News and Notes
-So when the Home Page fires up, you can either Login or Register (the 2 links on the header). Although not in the requirements of the Practicum, I wanted to show how both .sql scripts and Entity Framework (using the the ASP.NETCore MVC Identity Validation) can be executed against a MySQL database instance on Docker (note, that the database type of MySQL doesn't exactly matter - this same setup works for any database type, other than NoSQL Databases). To review all of the requirements performed for the Practicum:
-1. You can create your own login with ASP.NET Core Identity (create your own username and password)
-2. Once you log in, you will be taken to the CRUD section of the requirements with Categories and Items!
+So when the Home Page fires up, the base requirements of this Practicum are listed. The header, with the company logo for the practicum, is the link to the randomizer generation (using the ```3rd Algorithm```, where creating a randomizer runs this algorithm, and can be utilized in a CRUD fashion. By Creating a New Radomizer, the project fulfills the first requirement of generating a list of random numbers, and will display as such on the page. You can edit, delete, or update any of the randomizers while running the site!
 
 ## Troubleshooting
 Sometimes not everything goes according to plan. So here are some hints with troubleshooting:
@@ -172,9 +181,9 @@ D. Some folders you will see a ```delete_me.txt``` or a ```what_is_this_folder.m
 
 E. If you run all or any tests via the bash ```build.sh``` file, and then want to run the application in the web browser (F5), then you will need to run the ```load.sh``` script inside the Build folder (as the tests will shut down Docker and delete all secret keys). You will notice this occuring when you run the app, and see the following exception:
 ```
-ArgumentException: The 'AppId' option must be provided. (Parameter 'AppId') [Facebook]
+ArgumentException: The 'AppId' option must be provided. (Parameter 'AppId')
 ```
 
 ## Epilogue
-I hope this has given enough information on how to run the project. The home page has some instructions with testing out the CRUD of the Categories and Items from the web interface (and the functional tests do the same as well). The way this Visual Studio solution is set up, is how I've been setting up projects for a number of years (with CI/CD in mind at all times). Certainly if you have any questions or concerns, please feel free to reach out to me.
+I hope this has given enough information on how to run the project. The way this Visual Studio solution is set up, is how I've been setting up projects for a number of years (with CI/CD in mind at all times). Certainly if you have any questions or concerns, please feel free to reach out to me.
 
