@@ -101,11 +101,10 @@ A. In a bash terminal (I use Git's bash terminal all the time), navigate to the 
 
 What is going to happen next, is the following:
 1. The ```stop.sh``` script will be called, which shuts down all docker containers based on the docker-compose.yml file in that same Build Directory
-2. All Secrets created or stored in your Secret Manager for this application, will be removed
-3. The docker container will spin up, pulling the latest version of MySQL from docker hub and installing it
-4. Entity Framework is up next, and will be called to add the RandomSequence table to the MySQL Database
-5. Using NAnt, and the target ```clean.build.solution```, NAnt will copy all appropriate ```appsettings.json``` and ```log4net.config``` files to all projects, and copy over the ```xunit.runner.json``` to the test projects, run ```dotnet restore``` on all projects, downloading all required packages needed to the NuGetPackages folder, and clean, and compile the entire solution
-6. Lastly, it will run the Pandell.Practicum.App project, which will fire up the web site on your ```localhost:5001 or localhost:5000```
+2. The docker container will spin up, pulling the latest version of MySQL from docker hub and installing it
+3. Entity Framework is up next, and will be called to add the RandomSequence table to the MySQL Database
+4. Using NAnt, and the target ```clean.build.solution```, NAnt will copy all appropriate ```appsettings.json``` and ```log4net.config``` files to all projects, and copy over the ```xunit.runner.json``` to the test projects, run ```dotnet restore``` on all projects, downloading all required packages needed to the NuGetPackages folder, and clean, and compile the entire solution
+5. Lastly, it will run the Pandell.Practicum.App project, which will fire up the web site on your ```localhost:5001 or localhost:5000```
 
 B. Next, in Chrome, open a tab in incognito mode, and navigate to ```localhost:5001 (or localhost:5000)``` - you should see the home page of the application (which has some instructions of what to click on, in order to test all the requirements of the practicum).
 
