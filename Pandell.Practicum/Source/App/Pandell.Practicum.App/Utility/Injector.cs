@@ -3,7 +3,6 @@ using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Pandell.Practicum.App.Data;
 using Pandell.Practicum.App.Domain;
-using Pandell.Practicum.App.Models;
 using Pandell.Practicum.App.Repository;
 using Pandell.Practicum.App.Services;
 
@@ -35,7 +34,7 @@ namespace Pandell.Practicum.App.Utility
         {
             return container.Kernel.HasComponent(typeof(IWindsorContainer))
                    && container.Kernel.HasComponent(typeof(IRepository<RandomSequence, Guid>))
-                   && container.Kernel.HasComponent(typeof(IService<RandomSequenceModel>));
+                   && container.Kernel.HasComponent(typeof(IRandomSequenceService));
         }
 
         public static void ReleaseAllRegistrations()

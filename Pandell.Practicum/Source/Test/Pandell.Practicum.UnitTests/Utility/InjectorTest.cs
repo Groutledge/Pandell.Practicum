@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Pandell.Practicum.App.Configuration;
 using Pandell.Practicum.App.Data;
 using Pandell.Practicum.App.Domain;
-using Pandell.Practicum.App.Models;
 using Pandell.Practicum.App.Repository;
 using Pandell.Practicum.App.Services;
 using Pandell.Practicum.App.Utility;
@@ -37,7 +36,7 @@ namespace Pandell.Practicum.UnitTests.Utility
         private static void AssertCertainInstancesInsideContainer()
         {
             var repository = Injector.Resolve<IRepository<RandomSequence, Guid>>();
-            var service = Injector.Resolve<IService<RandomSequenceModel>>();
+            var service = Injector.Resolve<IRandomSequenceService>();
 
             (repository.GetType() == typeof(RandomSequenceRepository)).Should().BeTrue();
             (service.GetType() == typeof(RandomSequenceService)).Should().BeTrue();
