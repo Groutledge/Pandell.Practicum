@@ -77,7 +77,7 @@ namespace Pandell.Practicum.App.Utility
                     .LifestyleSingleton());
             
             container.Register(
-                Component.For<IService<RandomSequenceModel>>()
+                Component.For<IRandomSequenceService>()
                     .ImplementedBy<RandomSequenceService>()
                     .LifestyleSingleton());
         }

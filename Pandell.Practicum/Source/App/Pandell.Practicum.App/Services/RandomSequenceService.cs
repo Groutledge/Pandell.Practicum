@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Pandell.Practicum.App.Domain;
+using Pandell.Practicum.App.Extensions;
 using Pandell.Practicum.App.Map;
 using Pandell.Practicum.App.Models;
 using Pandell.Practicum.App.Repository;
@@ -12,7 +13,7 @@ namespace Pandell.Practicum.App.Services
 {
     public interface IRandomSequenceService : IService<RandomSequenceModel>
     {
-        Task<IEnumerable<int>> GenerateRandomSequence();
+        Task<RandomSequenceModel> GenerateRandomSequence();
     }
     
     public class RandomSequenceService : AbstractService<RandomSequence, RandomSequenceModel>, IRandomSequenceService
@@ -44,7 +45,7 @@ namespace Pandell.Practicum.App.Services
             return await ExecuteOperation(domainToAdd,
                     item =>
                     {
-                        item.Id = IdService.GenerateId();
+                        item.Id = item.Id.IsEmptyGuid() ? IdService.GenerateId() : item.Id;
                         item.DateInserted = Clock.UtcNow();
                         item.LastModifiedBy = Environment.UserName;
                         return item;
@@ -88,9 +89,13 @@ namespace Pandell.Practicum.App.Services
             return foundSequence != null;
         }
 
-        public Task<IEnumerable<int>> GenerateRandomSequence()
+        public Task<RandomSequenceModel> GenerateRandomSequence()
         {
-            return Task.Run(() => randomSequenceGeneratorService.ThirdGenerateRandomSequenceMethod());
+            return Task.Run(() => new RandomSequenceModel
+            {
+                Id = IdService.GenerateId(),
+                RandomSequence = randomSequenceGeneratorService.ThirdGenerateRandomSequenceMethod(),
+            });
         }
 
         protected override async Task<RandomSequenceModel> GetByDomainAsync(RandomSequence itemToFind)

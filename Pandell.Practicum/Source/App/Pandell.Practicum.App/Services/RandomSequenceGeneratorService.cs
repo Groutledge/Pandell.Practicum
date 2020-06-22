@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using MoreLinq;
 using Pandell.Practicum.App.Enumerations;
@@ -10,15 +9,14 @@ namespace Pandell.Practicum.App.Services
 {
     public interface IRandomSequenceGeneratorService
     {
-        IEnumerable<int> FirstGenerateRandomSequenceMethod();
-        IEnumerable<int> SecondGenerateRandomSequenceMethod();
-        IEnumerable<int> ThirdGenerateRandomSequenceMethod();
+        List<int> FirstGenerateRandomSequenceMethod();
+        List<int> SecondGenerateRandomSequenceMethod();
+        List<int> ThirdGenerateRandomSequenceMethod();
     }
     
     public class RandomSequenceGeneratorService : IRandomSequenceGeneratorService
     {
-        [SuppressMessage("ReSharper", "EmptyEmbeddedStatement")]
-        public IEnumerable<int> FirstGenerateRandomSequenceMethod()
+        public List<int> FirstGenerateRandomSequenceMethod()
         {
             var random = new Random();
             var randomNumbers = new HashSet<int>();
@@ -26,24 +24,24 @@ namespace Pandell.Practicum.App.Services
             for (var i = 0; i < (int) RandomSequenceCodes.MaxSequence; i++)
                 while (!randomNumbers.Add(random.Next((int) RandomSequenceCodes.MaxSequence)));
 
-            return randomNumbers;
+            return randomNumbers.ToList();
         }
 
-        public IEnumerable<int> SecondGenerateRandomSequenceMethod()
+        public List<int> SecondGenerateRandomSequenceMethod()
         {
             var randomNumbers = GenerateEnumerableIntegerRange();
-            return MoreEnumerable.Shuffle(randomNumbers);
+            return MoreEnumerable.Shuffle(randomNumbers).ToList();
         }
 
-        public IEnumerable<int> ThirdGenerateRandomSequenceMethod()
+        public List<int> ThirdGenerateRandomSequenceMethod()
         {
             var randomNumbers = GenerateEnumerableIntegerRange();
             return randomNumbers.Shuffle();
         }
 
-        private IEnumerable<int> GenerateEnumerableIntegerRange()
+        private List<int> GenerateEnumerableIntegerRange()
         {
-            return Enumerable.Range(0, (int) RandomSequenceCodes.MaxSequence);
+            return Enumerable.Range(0, (int) RandomSequenceCodes.MaxSequence).ToList();
         }
     }
 }

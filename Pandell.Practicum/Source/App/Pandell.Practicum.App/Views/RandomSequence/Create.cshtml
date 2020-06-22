@@ -1,0 +1,45 @@
+﻿@model RandomSequenceModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "_Layout";
+}
+
+<h2>Generate a New Random Sequence</h2>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Id"/>
+                <b><label asp-for="Id" class="control-label"></label></b>
+                <div class="small">
+                    @Html.DisplayTextFor(x => x.Id)
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="RandomSequenceHidden"/>
+                <b><label asp-for="TransformedRandomSequence" class="control-label"></label></b>
+                <table class="table">
+                    @foreach (var sequence in Model.TransformedRandomSequence)
+                    {
+                        <tr>
+                            <td>
+                                <div class="small">
+                                    @Html.DisplayTextFor(x => sequence)
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to All Random Sequences</a>
+</div>

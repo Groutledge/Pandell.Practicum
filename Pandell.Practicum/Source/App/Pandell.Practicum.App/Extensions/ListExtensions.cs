@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pandell.Practicum.App.Enumerations;
 
 namespace Pandell.Practicum.App.Extensions
 {
     public static class ListExtensions
     {
-        private static readonly Random random = new Random();
-
-        public static IEnumerable<int> Shuffle(this IEnumerable<int> enumerableToShuffle)
+        public static bool IsNullOrEmpty(this List<int> listToCheck)
         {
+            return listToCheck == null || !listToCheck.Any();
+        }
+        
+        public static List<int> Shuffle(this List<int> enumerableToShuffle)
+        {
+            var random = new Random();
             var listToShuffle = enumerableToShuffle.ToList();
             var totalCount = listToShuffle.Count;
             
@@ -23,6 +28,31 @@ namespace Pandell.Practicum.App.Extensions
             }
 
             return listToShuffle;
+        }
+
+        public static List<string> Transform(this List<int> listToTransform)
+        {
+            var transformedRandomSequence = new List<string>();
+            var numberOfBatches = listToTransform.NumberOfBatches((int) RandomSequenceCodes.MaxLineSequence);
+
+            for (var i = 0; i < numberOfBatches; i++)
+            {
+                var generatedLine = listToTransform.Take((int) RandomSequenceCodes.MaxLineSequence);
+                transformedRandomSequence.Add(generatedLine.ToFormattedBatch());
+                listToTransform = RemoveRangeAlreadyAccountedFor(listToTransform, (int) RandomSequenceCodes.MaxLineSequence);
+            }
+
+            return transformedRandomSequence;
+        }
+
+        private static List<int> RemoveRangeAlreadyAccountedFor(List<int> listToTransform, int batchSize)
+        {
+            listToTransform.RemoveRange(0, 
+                    listToTransform.Count < batchSize 
+                        ? listToTransform.Count 
+                        : batchSize);
+
+            return listToTransform;
         }
     }
 }

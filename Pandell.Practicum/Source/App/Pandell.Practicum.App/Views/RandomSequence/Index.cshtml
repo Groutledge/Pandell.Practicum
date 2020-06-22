@@ -1,0 +1,67 @@
+﻿@using Pandell.Practicum.App.Extensions
+@model List<RandomSequenceModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "_Layout";
+}
+
+<h2>Pandell Practicum - CRUD Randomizer!</h2>
+<p>Below are the Items and Categories retrieved from the Dockerized MySQL Instance</p>
+<p>
+    <a asp-action="Create">Create New Numeric Randomizer</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().TransformedRandomSequence)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <div class="small">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </div>
+            </td>
+            <td>
+                @if (!item.RandomSequence.IsNullOrEmpty())
+                {
+                    @foreach (var subItem in item.TransformedRandomSequence)
+                    {
+                        <div class="small">
+                            @Html.DisplayFor(modelItem => subItem)
+                        </div>
+                    }   
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">
+                    <img src="edit.png" width="25" height="25" alt="Edit Randomizer"/>
+                </a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">
+                    <img src="delete.png" width="25" height="25" alt="Delete Randomizer"/>
+                </a>
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            <h4>TOTAL:</h4>
+        </td>
+        <td>
+            <h4>
+                @Html.DisplayFor(model => Model.Count)
+            </h4>
+        </td>
+    </tr>
+    </tbody>
+</table>

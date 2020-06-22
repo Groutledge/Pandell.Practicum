@@ -12,6 +12,7 @@ namespace Pandell.Practicum.App.Map
         {
             ConvertFromModelToDomain();
             ConvertFromDomainToModel();
+            MapDomainToDomain();
         }
 
         private void ConvertFromModelToDomain()
@@ -26,6 +27,16 @@ namespace Pandell.Practicum.App.Map
             CreateMap<RandomSequence, RandomSequenceModel>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(x => x.RandomSequence, opt => opt.MapFrom(src => src.GeneratedSequence.FromJsonObject()));
+        }
+        
+        private void MapDomainToDomain()
+        {
+            CreateMap<RandomSequence, RandomSequence>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(x => x.GeneratedSequence, opt => opt.MapFrom(src => src.GeneratedSequence))
+                .ForMember(x => x.DateInserted, opt => opt.Ignore())
+                .ForMember(x => x.DateUpdated, opt => opt.MapFrom(src => src.DateUpdated))
+                .ForMember(x => x.LastModifiedBy, opt => opt.MapFrom(src => src.LastModifiedBy));
         }
     }
 }

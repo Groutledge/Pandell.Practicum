@@ -1,0 +1,41 @@
+﻿@model RandomSequenceModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "_Layout";
+}
+
+<h2>Edit a Random Sequence</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div class="small">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id"/>
+            </div>
+            <div class="form-group">
+                <div class="small">
+                    <input type="hidden" asp-for="RandomSequence"/>
+                    <b><label asp-for="TransformedRandomSequence" class="control-label"></label></b>
+                    <input type="text" asp-for="RandomSequenceHidden"/>
+                    <span asp-validation-for="RandomSequenceHidden" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="small">
+                <b>NOTE: </b>The above Random Sequence for Editing is in a JSON String format. Please adhere to the [..,..,..,] format (no major error checking has been added to this Practicum to ensure complete error prone vitality
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to All Random Sequences</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
