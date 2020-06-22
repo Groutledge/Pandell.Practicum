@@ -110,7 +110,7 @@ What is going to happen next, is the following:
 B. Next, in Chrome, open a tab in incognito mode, and navigate to ```localhost:5001 (or localhost:5000)``` - you should see the home page of the application (which has some instructions of what to click on, in order to test all the requirements of the practicum).
 
 ## How to Shut Everything Down
-A. Fairly simple - if you have Visual Studio open while doing the above, you can stop the project (or kill it in Task Manager), and in bash, navigate to the Build folder to where you downloaded the code to on your PC, and run the ```stop.sh``` script, which will shut down all containers and remove all keys from your Secret Manager
+A. Fairly simple - if you have Visual Studio open while doing the above, you can stop the project (or kill it in Task Manager), and in bash, navigate to the Build folder to where you downloaded the code to on your PC, and run the ```stop.sh``` script, which will shut down all containers
 
 *NOTE: If running the start.sh script, and you want to shut down the bash terminal via CTRL+C, it is a documented bug with .NET Core 3.0 that sometimes CTRL+C may not work
 
