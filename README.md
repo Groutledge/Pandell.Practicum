@@ -144,7 +144,7 @@ So if I wanted to run all the unit tests of this project, I would type:
 ./build.sh unit.tests
 ```
 
-And you will see what it all does from there. It will run the ```start.sh``` script, get all the data and containers for MySQL up and running (through the .sql script in the 001 folder, plus Entity Framework), clean build the solution (with restoring packages), copy all the proper configuration files, and run all the unit tests. When finished, it runs the ```stop.sh``` script, which shuts down all Docker containers, and removes all secrets from the Secret Manager (pertaining to this solution). So a great CI tool - I use it quite often with running tests to ensure the production code I've written, hasn't broken anything else somewhere in the codebase (and we've all encountered this many times!). 
+And you will see what it all does from there. It will run the ```start.sh``` script, get all the data and containers for MySQL up and running (through the .sql script in the 001 folder, plus Entity Framework), clean build the solution (with restoring packages), copy all the proper configuration files, and run all the unit tests. When finished, it runs the ```stop.sh``` script, which shuts down all Docker containers. So a great CI tool - I use it quite often with running tests to ensure the production code I've written, hasn't broken anything else somewhere in the codebase (and we've all encountered this many times!). 
 
 ## High Level Architecture
 The site is an ASP.NETCore MVC 3.1 Web Application, using Entity Framework Core V3.1.4. The hierarchy is as follows:
